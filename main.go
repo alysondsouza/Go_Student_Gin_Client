@@ -45,7 +45,7 @@ type teacher struct {
 func main() {
 	fmt.Println("Calling API...")
 	client := &http.Client{}
-	req, err := http.NewRequest("GET", "http://localhost:8080/", nil)
+	req, err := http.NewRequest("GET", "http://localhost:8080/courses", nil)
 	if err != nil {
 		fmt.Print(err.Error())
 	}
@@ -63,7 +63,7 @@ func main() {
 		fmt.Print(err.Error())
 	}
 
-	var studentObject student
+	var studentObject []course
 	json.Unmarshal(bodyBytes, &studentObject)
 	fmt.Printf("API Response as struct %+v\n", studentObject)
 }
