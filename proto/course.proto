@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option go_package = "google.golang.org/grpc/examples/helloworld/helloworld";
+
+package course;
+
+message Course {
+	int32 CourseID        = 1;
+	string CourseName     = 2;
+	float CourseScore     = 3;
+}
