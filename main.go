@@ -3,11 +3,15 @@ package main
 // https://levelup.gitconnected.com/consuming-a-rest-api-using-golang-b323602ba9d8
 
 //POST
-//curl http://localhost:8080/students `
-//--include `
-//--header "Content-Type: application/json" `
-//--request "POST" `
-//--data '{"StudentID": 7,"StudentName": "Ahmed","Enrollment": "new","CourseWorkLoad": 10.0}'
+// curl http://localhost:8080/students `
+// --include `
+// --header "Content-Type: application/json" `
+// --request "POST" `
+// --data '{"StudentID": 7,"StudentName": "Ahmed","Enrollment": "new","CourseWorkLoad": 10.0}'
+
+
+//go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.26
+//go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.1
 
 import (
 	"encoding/json"
@@ -16,16 +20,10 @@ import (
 	"net/http"
 )
 
-type Response struct {
-	ID     string `json:"id"`
-	Joke   string `json:"joke"`
-	Status int    `json:"status"`
-}
-
 type student struct {
-	StudentID      int     `json:"studentid"` //STRING VS INT
+	StudentID      int     `json:"studentid"`
 	StudentName    string  `json:"studentname"`
-	Enrollment     string  `json:"enrollment"` //STRING VS ENUM
+	Enrollment     string  `json:"enrollment"`
 	CourseWorkLoad float64 `json:"courseworkload"`
 }
 
@@ -44,6 +42,32 @@ type teacher struct {
 
 func main() {
 	fmt.Println("Calling API...")
+	fmt.Println("")
+
+	inputSwitch()
+
+}
+
+func inputSwitch() {
+	fmt.Println("Write your request:\nGET, PUT, DELETE or POST")
+	fmt.Print("Input: ")
+	var input string
+	fmt.Scanln(&input)
+
+	switch input {
+	case "GET":
+		getAllCourses()
+	case "PUT":
+		fmt.Println("PUT not implemented")
+	case "DELETE":
+		fmt.Println("DELETE not implemented")
+	case "POST":
+		fmt.Println("POST not implemented")
+	}
+
+}
+
+func getAllCourses() {
 	client := &http.Client{}
 	req, err := http.NewRequest("GET", "http://localhost:8080/courses", nil)
 	if err != nil {
@@ -63,7 +87,7 @@ func main() {
 		fmt.Print(err.Error())
 	}
 
-	var studentObject []course
-	json.Unmarshal(bodyBytes, &studentObject)
-	fmt.Printf("API Response as struct %+v\n", studentObject)
+	var courseObject []course
+	json.Unmarshal(bodyBytes, &courseObject)
+	fmt.Printf("%+v\n", courseObject)
 }

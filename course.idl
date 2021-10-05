@@ -1,0 +1,14 @@
+struct Course{
+	int CourseID = 1;
+	string CourseName = 2;
+	teacher CourseTeacher = 3;
+	float CourseScore = 4;
+}
+
+Message CourseID{
+	required Course = 1;
+}
+
+Service Course{
+	rpc.ListCourses(CourseID) returns (stream Courses) {}
+}
